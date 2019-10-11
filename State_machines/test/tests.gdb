@@ -26,13 +26,13 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "PINA: 0x01, 0x00 => PORTB: 02, state: BUTTON2"
+test "PINA: 0x01, 0x00 => PORTB: 02, state: WAIT"
 set state = INIT
 setPINA 0x01
 setPINA 0x00
 continue 2
 expectPORTB 02
-expect state BUTTON2
+expect state WAIT
 checkResult
 
 test "PINA: 0x01, 0x00 => PORTB: 02, state: BUTTON2"
