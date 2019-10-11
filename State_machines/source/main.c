@@ -38,7 +38,7 @@ int main(void) {
                 break;
         
             case BUTTON1:
-                if((PINA & 0x01) == 1) {
+                if((PINA & 0x01) == 0) {
                     state = WAIT;
                 }
                 else {
@@ -56,7 +56,7 @@ int main(void) {
                 break;
                 
             case BUTTON2:
-                if((PINA & 0x01) == 1) {
+                if((PINA & 0x01) == 0) {
                     state = PRESSED;
                 }
                 else {
@@ -66,13 +66,14 @@ int main(void) {
         }     
         switch(state) { //actions
             case INIT:
+                PORTB = 0x01;
                 break;
             
             case PRESSED:
                 break;
             
             case BUTTON1:
-                PORTB = 0x01;
+                PORTB = 0x02;
                 break;
                 
             case WAIT:
