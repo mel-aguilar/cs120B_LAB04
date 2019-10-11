@@ -38,7 +38,7 @@ int main(void) {
                 break;
         
             case BUTTON1:
-                if((PINA & 0x01) == 0) {
+                if(PINA == 0) {
                     state = WAIT;
                 }
                 else {
@@ -56,7 +56,7 @@ int main(void) {
                 break;
                 
             case BUTTON2:
-                if((PINA & 0x01) == 0) {
+                if(PINA == 0) {
                     state = PRESSED;
                 }
                 else {
