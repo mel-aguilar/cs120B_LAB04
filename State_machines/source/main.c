@@ -37,7 +37,7 @@ int main(void) {
                 }
                 break;
         
-        case BUTTON1:
+            case BUTTON1:
                 if((PINA & 0x01) == 1) {
                     state = WAIT;
                 }
@@ -46,7 +46,7 @@ int main(void) {
                 }
                 break;
                 
-        case WAIT:
+            case WAIT:
                 if((PINA & 0x01) == 1) {
                     state = BUTTON2;
                 }
@@ -55,7 +55,7 @@ int main(void) {
                 }
                 break;
                 
-        case BUTTON2:
+            case BUTTON2:
                 if((PINA & 0x01) == 1) {
                     state = PRESSED;
                 }
@@ -63,7 +63,7 @@ int main(void) {
                     state = BUTTON2;
                 }
                 break;
-                
+        }     
         switch(state) { //actions
             case INIT:
                 break;
@@ -82,6 +82,7 @@ int main(void) {
             case BUTTON2:
                 PORTB = 0x01;
                 break;
+        }
     }
     return 1;
 }
