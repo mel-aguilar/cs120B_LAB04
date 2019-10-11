@@ -14,10 +14,49 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-
+    enum states {ON, OFF} state;
+    DDRA = 0x00; PORTA = 0xFF; //input
+    DDRB = 0xFF; PORTB = 0x00; //output
+    state = START;
+    
     /* Insert your solution below */
     while (1) {
-
+        state = START;
+        
+        switch(state) { //transitions
+            case START:
+                state = ON;
+                break;
+                
+            case ON:
+                if ((PINA & 0x01) == 1) {
+                    state = OFF;
+                }
+                else {
+                    state = ON;
+                }
+                break;
+        
+        case OFF:
+                if(((PINA & 0x01) == 1) {
+                    state = ON;
+                }
+                else {
+                    state = OFF;
+                }
+                break;
+                   
+        switch(state) { //actions
+            case START:
+            break;
+            
+            case ON:
+            PORTB = 0x01;
+            break;
+            
+            case ON:
+            PORTB = 0x02;
+            break;
     }
     return 1;
 }
