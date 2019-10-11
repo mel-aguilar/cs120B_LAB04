@@ -31,7 +31,7 @@ set state = INIT
 setPINA 0x01
 setPINA 0x00
 continue 2
-expectPORTB 02
+expectPORTB 0x02
 expect state BUTTON1
 checkResult
 
@@ -40,7 +40,7 @@ set state = PRESSED
 setPINA 0x01
 setPINA 0x00
 continue 2
-expectPORTB 02
+expectPORTB 0x02
 expect state BUTTON2
 checkResult
 
