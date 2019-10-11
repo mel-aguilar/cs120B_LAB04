@@ -14,7 +14,7 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    enum states {INIT, PRESSED, BUTTON1, BUTTON2,WAIT} state;
+    enum states {INIT, PRESSED, BUTTON1, BUTTON2,WAIT2} state;
     DDRA = 0x00; PORTA = 0xFF; //input
     DDRB = 0xFF; PORTB = 0x00; //output
     state = INIT;
@@ -39,19 +39,19 @@ int main(void) {
         
             case BUTTON1:
                 if(PINA == 0) {
-                    state = WAIT;
+                    state = WAIT2;
                 }
                 else {
                     state = BUTTON1;
                 }
                 break;
                 
-            case WAIT:
+            case WAIT2:
                 if((PINA & 0x01) == 1) {
                     state = BUTTON2;
                 }
                 else {
-                    state = WAIT;
+                    state = WAIT2;
                 }
                 break;
                 
@@ -76,7 +76,7 @@ int main(void) {
                 PORTB = 0x02;
                 break;
                 
-            case WAIT:
+            case WAIT2:
                 //PORTB = 0x01;
                 break;
                 
