@@ -14,7 +14,6 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    
     DDRA = 0x00; PORTA = 0xFF; //input
     DDRB = 0xFF; PORTB = 0x00; //output
     enum states {INIT, PRESSED, BUTTON1, BUTTON2,WAIT2} state;
@@ -22,8 +21,6 @@ int main(void) {
     
     /* Insert your solution below */
     while (1) {
-        //state = INIT;
-        
         switch(state) { //transitions
             case INIT:
                 state = PRESSED;
@@ -48,7 +45,7 @@ int main(void) {
                 break;
                 
             case BUTTON2:
-                if((PINA == 0) {
+                if(PINA == 0) {
                     state = WAIT2;
                 }
                 else {
