@@ -14,9 +14,10 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    enum states {INIT, PRESSED, BUTTON1, BUTTON2,WAIT2} state;
+    
     DDRA = 0x00; PORTA = 0xFF; //input
     DDRB = 0xFF; PORTB = 0x00; //output
+    enum states {INIT, PRESSED, BUTTON1, BUTTON2,WAIT2} state;
     state = INIT;
     
     /* Insert your solution below */
@@ -30,7 +31,7 @@ int main(void) {
                 
             case PRESSED:
                 if ((PINA & 0x01) == 1) {
-                    state = BUTTON1;
+                    state = BUTTON2;
                 }
                 else {
                     state = PRESSED;
@@ -39,28 +40,28 @@ int main(void) {
         
             case BUTTON1:
                 if(PINA == 0) {
-                    state = WAIT2;
+                    state = PRESSED;
                 }
                 else {
                     state = BUTTON1;
                 }
                 break;
                 
-            case WAIT2:
-                if((PINA & 0x01) == 1) {
-                    state = BUTTON2;
+            case BUTTON2:
+                if((PINA == 0) {
+                    state = WAIT2;
                 }
                 else {
-                    state = WAIT2;
+                    state = BUTTON2;
                 }
                 break;
                 
-            case BUTTON2:
-                if(PINA == 0) {
-                    state = PRESSED;
+            case WAIT2:
+                if((PINA & 0x01) == 1) {
+                    state = BUTTON1;
                 }
                 else {
-                    state = BUTTON2;
+                    state = WAIT2;
                 }
                 break;
         }     
@@ -72,16 +73,16 @@ int main(void) {
             case PRESSED:
                 break;
             
-            case BUTTON1:
-                PORTB = 0x02;
-                break;
-                
             case WAIT2:
                 //PORTB = 0x01;
                 break;
+
+            case BUTTON1:
+                PORTB = 0x01;
+                break;
                 
             case BUTTON2:
-                PORTB = 0x01;
+                PORTB = 0x02;
                 break;
         }
     }
