@@ -36,17 +36,17 @@ expectPORTB 0
 expect state INIT
 checkResult
 
-test "PINA: 0x00, 0x01 => PORTB: 0, state = STEP_1"
+test "PINA: 0x00, 0x01 => PORTB: 0, state = FIRST"
 set state = START
 setPINA 0x00
 continue 2
 setPINA 0x01
 continue 2
 expectPORTB 0
-expect state STEP_1
+expect state FIRST
 checkResult
 
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = STEP_2"
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = SECOND"
 set state = START
 setPINA 0x00
 continue 2
@@ -55,11 +55,11 @@ continue 2
 setPINA 0x00
 continue 2
 expectPORTB 0
-expect state STEP_2
+expect state SECOND
 checkResult
 
 test "PINA: 0x00 => PORTB: 0, state = OPEN"
-set state = STEP_3
+set state = THIRD
 setPINA 0x00
 continue 2
 expectPORTB 0x01
