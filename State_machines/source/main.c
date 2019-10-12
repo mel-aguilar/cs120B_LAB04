@@ -12,76 +12,68 @@
 #include "simAVRHeader.h"
 #endif
 
-int main(void) {
-    /* Insert DDR and PORT initializations */
-    DDRA = 0x00; PORTA = 0xFF; //input
-    DDRB = 0xFF; PORTB = 0x00; //output
-    enum states {INIT, PRESSED, BUTTON1, BUTTON2,WAIT2} state;
-    state = INIT;
-    
-    /* Insert your solution below */
-    while (1) {
-        switch(state) { //transitions
-            case INIT:
-                state = PRESSED;
-                break;
-                
-            case PRESSED:
-                if ((PINA & 0x01) == 1) {
-                    state = BUTTON2;
-                }
-                else {
-                    state = PRESSED;
-                }
-                break;
-        
-            case BUTTON1:
-                if(PINA == 0) {
-                    state = PRESSED;
-                }
-                else {
-                    state = BUTTON1;
-                }
-                break;
-                
-            case BUTTON2:
-                if(PINA == 0) {
-                    state = WAIT2;
-                }
-                else {
-                    state = BUTTON2;
-                }
-                break;
-                
-            case WAIT2:
-                if((PINA & 0x01) == 1) {
-                    state = BUTTON1;
-                }
-                else {
-                    state = WAIT2;
-                }
-                break;
-        }     
-        switch(state) { //actions
-            case INIT:
-                PORTB = 0x01;
-                break;
-            
-            case PRESSED:
-                break;
-            
-            case WAIT2:
-                //PORTB = 0x01;
-                break;
+enum STATES {START,INIT,INCR,RESET,DECR} state;
+unsigned char begin = 0x00;
 
-            case BUTTON1:
-                PORTB = 0x01;
-                break;
-                
-            case BUTTON2:
-                PORTB = 0x02;
-                break;
-        }
+void tick() {
+    switch(state) {
+        case START:
+            state = INIT;
+            break;
+        case INIT:
+            if (PINA == 0) {
+                state = RESET;
+            } 
+            else if (PINA == 1) {
+                state = INCR;
+            } 
+            else if (PINA == 2) {
+                state = DECR;
+            } 
+            else {
+                state = INIT;
+            }
+            break;
+        case INCR:
+            state = INIT;
+            break;
+        case RESET:
+            state = INIT;
+            break;
+        case DECR:
+            state = INIT;
+            break;
     }
-    return 1;
+
+    switch(state) {
+        case START:
+            break;
+        case INIT:
+            break;
+        case INCR:
+            if (begin < 9) {
+                ++begin;
+            }
+            break;
+        case RESET:
+            begin = 0;
+            break;
+        case DECR:
+            if (begin > 0) {
+                --begin;
+            }
+            break;
+    }
 }
+
+    int main(void) {
+        /* Insert DDR and PORT initializations */
+    DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
+    state = START;
+    begin = 7;
+        while (1) {
+            tick();
+            PORTC = begin;
+        }
+        return 1;
+    }
