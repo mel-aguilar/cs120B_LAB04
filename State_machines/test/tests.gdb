@@ -26,61 +26,54 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "PINA: 0x01, 0x00 => PORTB: 02, state: WAIT2"
-set state = INIT
+test "PINA: 0x01 => PORTC: 8, state = INCR"
+set state = START
 setPINA 0x01
 continue 2
-setPINA 0x00
-continue 2
-expectPORTB 0x02
-expect state WAIT2
+expectPORTC 8
+expect state INCR
 checkResult
 
-test "PINA: 0x01, 0x00 => PORTB: 02, state: WAIT2"
-set state = PRESSED
-setPINA 0x01
-continue 2
+
+test "PINA: 0x00 => PORTC: 0, state = RESET"
+set state = START
 setPINA 0x00
 continue 2
-expectPORTB 0x02
-expect state WAIT2
+expectPORTC 0
+expect state RESET
 checkResult
 
-test "PINA: 0x01, 0x00, 0x01, 0x00 => PORTB: 02, state: PRESSED"
-set state = INIT
-setPINA 0x01
+test "PINA: 0x02 => PORTC: 0, state = DECR"
+set state = START
+setPINA 0x02
 continue 2
-setPINA 0x00
-continue 2
-setPINA 0x01
-continue 2
-setPINA 0x00
-continue 2
-expectPORTB 0x01
-expect state PRESSED
+expectPORTC 0
+expect state DECR
 checkResult
 
-test "PINA: 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 => PORTB: 02, state: WAIT2"
-set state = INIT
-setPINA 0x01
+test "PINA: 0x00, 0x00 => PORTC: 0, state = RESET"
+set state = START
+setPINA 0x00
 continue 2
+setPINA 0x00
+continue 2
+expectPORTC 0
+expect state RESET
+checkResult
+
+test "PINA: 0x00, 001 => PORTC: 1, state = INCR"
+set state = START
 setPINA 0x00
 continue 2
 setPINA 0x01
 continue 2
-setPINA 0x00
-continue 2
-setPINA 0x01
-continue 2
-setPINA 0x00
-continue 2
-expectPORTB 0x02
-expect state WAIT2
+expectPORTC 1
+expect state INCR
 checkResult
 
 # Add tests below
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
-
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
 echo ======================================================\n
+ 
