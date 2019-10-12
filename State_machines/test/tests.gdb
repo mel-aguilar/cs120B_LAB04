@@ -27,6 +27,14 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 # Add tests below
 
+
+test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+setPINA 0x00
+setPINB 0x00
+continue 2
+expectPORTC 0
+checkResult
+
 test "PINA: 0x00 => PORTB: 0, state = INIT"
 set state = START
 setPINA 0x00
