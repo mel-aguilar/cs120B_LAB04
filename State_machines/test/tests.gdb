@@ -25,7 +25,6 @@
 
 echo ======================================================\n
 echo Running all tests..."\n\n
-
 # Add tests below
 
 test "PINA: 0x00 => PORTB: 0, state = INIT"
@@ -78,3 +77,4 @@ checkResult
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
 echo ======================================================\n
+ 
