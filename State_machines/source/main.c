@@ -12,68 +12,100 @@
 #include "simAVRHeader.h"
 #endif
 
-enum STATES {START,INIT,INCR,RESET,DECR} state;
-unsigned char begin = 0x00;
+ enum STATES {START,INIT,FIRST,SECOND,THIRD,OPEN} state;
 
-void tick() {
+    void tick(){
+        
     switch(state) {
-        case START:
-            state = INIT;
-            break;
+    case START:
+    state = INIT;
+    break;
+            
         case INIT:
-            if (PINA == 0) {
-                state = RESET;
-            } 
-            else if (PINA == 1) {
-                state = INCR;
-            } 
-            else if (PINA == 2) {
-                state = DECR;
-            } 
+            if( PINA == 1){
+                state = FIRST;
+            }
+            else{
+                state = INIT;
+            }
+           break;
+            
+        case FIRST:
+          if(PINA == 1){
+              state= FIRST;
+          }
+            else if(PINA == 0){
+                state = SECOND;
+            }
+            else{
+                state = INIT;
+            }
+            break;
+            
+        case SECOND:
+            if (PINA == 0){
+                state = SECOND;
+            }
+            else if(PINA == 2){
+                state = THIRD;
+            }
             else {
                 state = INIT;
             }
             break;
-        case INCR:
-            state = INIT;
+            
+        case THIRD:
+            if (PINA == 2){
+                state = THIRD;
+            }
+            else if (PINA == 0){
+                state = OPEN;
+            }
+            else{
+                state = INIT;
+            }
             break;
-        case RESET:
-            state = INIT;
-            break;
-        case DECR:
-            state = INIT;
+            
+        case OPEN:
+            if (PINA == 0x80){
+                state= INIT;
+            }
+            else{
+                state = OPEN;
+            }
             break;
     }
-
+        
     switch(state) {
         case START:
             break;
+            
         case INIT:
+            PORTB = 0x00;
             break;
-        case INCR:
-            if (begin < 9) {
-                ++begin;
-            }
+    
+        case FIRST:
             break;
-        case RESET:
-            begin = 0;
+            
+        case SECOND:
             break;
-        case DECR:
-            if (begin > 0) {
-                --begin;
-            }
+            
+        case THIRD:
             break;
+            
+        case OPEN:
+            PORTB = 0x01;
+            break; 
     }
-}
-
-    int main(void) {
-        /* Insert DDR and PORT initializations */
-    DDRA = 0x00; DDRC = 0xFF; PORTA = 0xFF; PORTC = 0x00;
-    state = START;
-    begin = 7;
-        while (1) {
+}    
+int main(void) {
+    /* Insert DDR and PORT initializations */
+DDRA= 0xFF; PORTA=0x00;
+DDRB= 0x00; PORTB = 0xFF;
+    
+    /* Insert your solution below */    
+    while (1) {
             tick();
-            PORTC = begin;
-        }
-        return 1;
     }
+    return 1;
+}
