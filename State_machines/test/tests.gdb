@@ -78,11 +78,11 @@ expectPORTB 0x01
 expect state OPEN
 checkResult
 
-test "PINA: 0x80 => PORTB: 0, state = INIT"
+test "PINA: 0x80 => PORTB: 1, state = INIT"
 set state = START
 setPINA 0x80
 continue 2
-expectPORTB 0x00
+expectPORTB 0x01
 expect state INIT
 checkResult
 
