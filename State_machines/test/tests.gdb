@@ -26,24 +26,24 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "PINA: 0x01, 0x00 => PORTB: 02, state: BUTTON1"
-set state = INIT
+test "PINA: 0x01, 0x00 => PORTB: 02, state: next_wait"
+set state = init
 setPINA 0x01
 continue 2
 setPINA 0x00
 continue 2
 expectPORTB 0x02
-expect state BUTTON1
+expect state next_wait
 checkResult
 
-test "PINA: 0x01, 0x00 => PORTB: 02, state: BUTTON2"
+test "PINA: 0x01, 0x00 => PORTB: 02, state: WAIT2"
 set state = PRESSED
 setPINA 0x01
 continue 2
 setPINA 0x00
 continue 2
 expectPORTB 0x02
-expect state BUTTON2
+expect state WAIT2
 checkResult
 
 test "PINA: 0x01, 0x00, 0x01, 0x00 => PORTB: 02, state: PRESSED"
@@ -60,7 +60,7 @@ expectPORTB 0x01
 expect state PRESSED
 checkResult
 
-test "PINA: 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 => PORTB: 02, state: BUTTON2"
+test "PINA: 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 => PORTB: 02, state: WAIT2"
 set state = INIT
 setPINA 0x01
 continue 2
@@ -75,12 +75,12 @@ continue 2
 setPINA 0x00
 continue 2
 expectPORTB 0x02
-expect state BUTTON2
+expect state WAIT2
 checkResult
 
-
-
+# Add tests below
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
+
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
 echo ======================================================\n
