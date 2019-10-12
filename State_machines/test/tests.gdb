@@ -44,7 +44,7 @@ expectPORTB 0
 expect state FIRST
 checkResult
 
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = FIRST"
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = SECOND"
 set state = START
 setPINA 0x00
 continue 2
@@ -53,7 +53,7 @@ continue 2
 setPINA 0x00
 continue 2
 expectPORTB 0
-expect state FIRST
+expect state SECOND
 checkResult
 
 test "PINA: 0x01, 0x00, 0x02 => PORTB: 1, state = OPEN"
