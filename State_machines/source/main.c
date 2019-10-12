@@ -12,17 +12,17 @@
 #include "simAVRHeader.h"
 #endif
 
- enum STATES {START,INIT,FIRST,SECOND,THIRD,OPEN} state;
-
+ enum STATES {START,INIT,FIRST, SECOND, THIRD, OPEN} state;
+	//unsigned char holder = 0x00;
     void tick(){
-        
+       
     switch(state) {
     case START:
     state = INIT;
     break;
             
         case INIT:
-            if( PINA == 1){
+            if(PINA == 1){
                 state = FIRST;
             }
             else{
@@ -32,10 +32,10 @@
             
         case FIRST:
           if(PINA == 1){
-              state= FIRST;
+              state = FIRST;
           }
             else if(PINA == 0){
-                state = SECOND;
+                state= SECOND;
             }
             else{
                 state = INIT;
@@ -44,7 +44,7 @@
             
         case SECOND:
             if (PINA == 0){
-                state = SECOND;
+                state= SECOND;
             }
             else if(PINA == 2){
                 state = THIRD;
@@ -79,33 +79,30 @@
     switch(state) {
         case START:
             break;
-            
         case INIT:
             PORTB = 0x00;
             break;
     
         case FIRST:
             break;
-            
         case SECOND:
             break;
-            
         case THIRD:
             break;
-            
         case OPEN:
             PORTB = 0x01;
-            break; 
+            break;
+            
     }
-}    
+    }    
 int main(void) {
     /* Insert DDR and PORT initializations */
-DDRA= 0xFF; PORTA=0x00;
-DDRB= 0x00; PORTB = 0xFF;
+DDRA = 0xFF; PORTA = 0x00;
+DDRB = 0x00; PORTB = 0xFF;
     
-    /* Insert your solution below */    
+    /* Insert your solution below */
     while (1) {
-            tick();
+        tick();
     }
     return 1;
 }
