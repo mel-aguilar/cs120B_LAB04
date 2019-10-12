@@ -25,15 +25,6 @@
 
 echo ======================================================\n
 echo Running all tests..."\n\n
-# Add tests below
-
-
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
-setPINA 0x00
-setPINB 0x00
-continue 2
-expectPORTC 0
-checkResult
 
 test "PINA: 0x00 => PORTB: 0, state = INIT"
 set state = START
@@ -43,29 +34,43 @@ expectPORTB 0
 expect state INIT
 checkResult
 
-test "PINA: 0x00, 0x01 => PORTB: 0, state = FIRST"
+test "PINA: 0x00, 0x04 => PORTB: 0, state = FIRST"
 set state = START
 setPINA 0x00
 continue 2
-setPINA 0x01
+setPINA 0x04
 continue 2
 expectPORTB 0
 expect state FIRST
 checkResult
 
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = SECOND"
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 0, state = FIRST"
 set state = START
 setPINA 0x00
 continue 2
-setPINA 0x01
+setPINA 0x04
 continue 2
 setPINA 0x00
 continue 2
 expectPORTB 0
-expect state SECOND
+expect state FIRST
 checkResult
 
-test "PINA: 0x00 => PORTB: 0, state = OPEN"
+test "PINA: 0x01, 0x00, 0x02 => PORTB: 1, state = OPEN"
+set state = START
+setPINA 0x00
+continue 2
+setPINA 0x04
+continue 2
+setPINA 0x00
+continue 2
+setPINA 0x02
+continue 2
+expectPORTB 1
+expect state OPEN
+checkResult
+
+test "PINA: 0x00, state = THIRD => PORTB: 1, state = OPEN"
 set state = THIRD
 setPINA 0x00
 continue 2
@@ -74,13 +79,14 @@ expect state OPEN
 checkResult
 
 test "PINA: 0x80 => PORTB: 0, state = INIT"
-set state = OPEN
+set state = START
 setPINA 0x80
 continue 2
 expectPORTB 0x00
 expect state INIT
 checkResult
 
+# Add tests below
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
